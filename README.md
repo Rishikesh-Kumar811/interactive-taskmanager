@@ -33,6 +33,7 @@ It features native physics-based spring animations, 3D interactive toggles, and 
 - <sub><img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Roller%20Coaster.png" alt="Roller Coaster" width="20" height="20" /></sub> **Native Scroll-Driven Animations:** Task cards smoothly fade in as they scroll into view using CSS `animation-timeline`, requiring absolute zero JavaScript.
 - <sub><img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Microscope.png" alt="Microscope" width="20" height="20" /></sub> **Event Trace Playground:** An isolated web component (Declarative Shadow DOM) allowing developers to visually trace the exact flow of Event Capturing and Bubbling across the DOM tree.
 - <sub><img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Gear.png" alt="Gear" width="20" height="20" /></sub> **Rendering Pipeline Visualizer:** A beautiful CSS grid topology illustrating the browser's internal engine flow from HTML Parsing to the Render Tree.
+- <sub><img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Control%20Knobs.png" alt="Terminal" width="20" height="20" /></sub> **Adaptive Terminal Log:** A minimalist, borderless terminal log component powered by the CSS `light-dark()` function and customized modern scrollbars that dynamically adapts perfectly to theme context.
 
 ---
 
@@ -43,16 +44,16 @@ This project abandons legacy approaches in favor of the strict 2026 web platform
 | Technology | 2026 Standard Implementation |
 | :--- | :--- |
 | **HTML** | Uses `<template shadowrootmode="open">` (Declarative Shadow DOM) and native `<dialog>` overlays. |
-| **CSS** | Fully refactored with **Native CSS Nesting** (`&`), customized dropdowns via `appearance: base-select` & `::picker()`, and `@starting-style` transitions. |
-| **JavaScript** | Replaces legacy `new Date()` with the immutable **`Temporal API`** (`Temporal.Now.plainDateISO()`). Employs **`Object.groupBy()`** and **`Promise.withResolvers()`** for advanced logic. |
+| **CSS** | Fully refactored with **Native CSS Nesting** (`&`), `light-dark()` color function for flawless theming, CSS View Transitions for state morphing, and `oklch()` color definitions. |
+| **JavaScript** | Utilizes **ES2026 Standards** including the **`Temporal API`** (`Temporal.Now.plainDateISO()`), **`Promise.withResolvers()`**, and modern structural event delegation. |
 | **DOM Engine** | 100% strict imperative DOM API usage (`createElement`, `createTextNode`, `appendChild`, `closest`, `remove`). |
 
 ---
 
 ## <sub><img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Building%20Construction.png" alt="Construction" width="28" height="28" /></sub> Architecture & Code Quality
 
-### <sub><img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Broom.png" alt="Broom" width="22" height="22" /></sub> Zero-Comment Policy
-In accordance with strict clean-code directives, this codebase contains **zero comments**. The architecture relies on self-documenting code, highly declarative variable naming, and strict modular separation.
+### <sub><img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Broom.png" alt="Broom" width="22" height="22" /></sub> Zero-Comment & Dead-Code Free Policy
+In accordance with strict clean-code directives, this codebase contains **zero comments** and **zero duplicated logic**. The architecture relies purely on self-documenting code, highly declarative variable naming, and strict modular separation. State duplication has been completely eliminated in favor of a single source of truth using `data-theme`.
 
 ### <sub><img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Link.png" alt="Link" width="22" height="22" /></sub> Event Delegation
 Instead of attaching memory-heavy event listeners to individual buttons, a single listener is attached to the parent `.task-bento-grid`. It uses `e.target.closest()` to precisely intercept actions, drastically reducing memory consumption and preventing memory leaks on dynamic DOM nodes.

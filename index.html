@@ -31,12 +31,16 @@
                                 </filter>
                             </defs>
                             <g filter="url(#sunGlow)">
-                                <path d="M50 5 L50 15 M50 85 L50 95 M5 50 L15 50 M85 50 L95 50 M18 18 L25 25 M75 75 L82 82 M18 82 L25 75 M75 18 L82 25" stroke="url(#sunGrad)" stroke-width="6" stroke-linecap="round"/>
-                                <path d="M35 12 L40 20 M65 88 L60 80 M12 35 L20 40 M88 65 L80 60 M26 15 L32 24 M74 85 L68 76 M15 26 L24 32 M85 74 L76 68" stroke="url(#sunGrad)" stroke-width="4" stroke-linecap="round"/>
-                                <circle cx="50" cy="50" r="24" fill="url(#sunGrad)"/>
-                                <circle cx="42" cy="45" r="3" fill="#662200"/>
-                                <circle cx="58" cy="45" r="3" fill="#662200"/>
-                                <path d="M42 55 Q50 62 58 55" stroke="#662200" stroke-width="3" stroke-linecap="round" fill="none"/>
+                                <g class="sun-rays">
+                                    <path d="M50 5 L50 15 M50 85 L50 95 M5 50 L15 50 M85 50 L95 50 M18 18 L25 25 M75 75 L82 82 M18 82 L25 75 M75 18 L82 25" stroke="url(#sunGrad)" stroke-width="6" stroke-linecap="round"/>
+                                    <path d="M35 12 L40 20 M65 88 L60 80 M12 35 L20 40 M88 65 L80 60 M26 15 L32 24 M74 85 L68 76 M15 26 L24 32 M85 74 L76 68" stroke="url(#sunGrad)" stroke-width="4" stroke-linecap="round"/>
+                                </g>
+                                <g class="sun-face">
+                                    <circle cx="50" cy="50" r="24" fill="url(#sunGrad)"/>
+                                    <circle cx="42" cy="45" r="3" fill="#662200"/>
+                                    <circle cx="58" cy="45" r="3" fill="#662200"/>
+                                    <path d="M42 55 Q50 62 58 55" stroke="#662200" stroke-width="3" stroke-linecap="round" fill="none"/>
+                                </g>
                             </g>
                         </svg>
                         
@@ -109,18 +113,23 @@
 
         <section class="pipeline-section premium-surface" aria-labelledby="pipeline-title">
             <h2 id="pipeline-title">Browser Rendering Pipeline</h2>
-            <div class="pipeline-grid">
-                <div class="pipeline-step"><span class="step-icon">📄</span>HTML</div>
-                <div class="pipeline-arrow">↓</div>
-                <div class="pipeline-step"><span class="step-icon">🔍</span>Parsing</div>
-                <div class="pipeline-arrow">↓</div>
-                <div class="pipeline-step"><span class="step-icon">✂️</span>Tokenization</div>
-                <div class="pipeline-arrow">↓</div>
-                <div class="pipeline-step branch"><span class="step-icon">🌳</span>DOM Tree</div>
-                
-                <div class="pipeline-step css-start"><span class="step-icon">💅</span>CSS</div>
-                <div class="pipeline-arrow css-arrow">↓</div>
-                <div class="pipeline-step branch css-tree"><span class="step-icon">🌲</span>CSSOM Tree</div>
+            <div class="pipeline-layout">
+                <div class="pipeline-branches">
+                    <div class="pipeline-branch">
+                        <div class="pipeline-step"><span class="step-icon">📄</span>HTML</div>
+                        <div class="pipeline-arrow">↓</div>
+                        <div class="pipeline-step"><span class="step-icon">🔍</span>Parsing</div>
+                        <div class="pipeline-arrow">↓</div>
+                        <div class="pipeline-step"><span class="step-icon">✂️</span>Tokenization</div>
+                        <div class="pipeline-arrow">↓</div>
+                        <div class="pipeline-step branch"><span class="step-icon">🌳</span>DOM Tree</div>
+                    </div>
+                    <div class="pipeline-branch">
+                        <div class="pipeline-step css-start"><span class="step-icon">💅</span>CSS</div>
+                        <div class="pipeline-arrow css-arrow">↓</div>
+                        <div class="pipeline-step branch css-tree"><span class="step-icon">🌲</span>CSSOM Tree</div>
+                    </div>
+                </div>
                 
                 <div class="pipeline-combo">DOM Tree + CSSOM Tree</div>
                 <div class="pipeline-arrow combo-arrow">↓</div>
@@ -136,10 +145,10 @@
                     <p class="demo-desc">Click the Child Button to trigger Capturing & Bubbling.</p>
                     
                     <div id="grandparentElem" class="demo-box grandparent">
-                        Grandparent
+                        <span class="box-label">Grandparent</span>
                         <div id="parentElem" class="demo-box parent">
-                            Parent
-                            <button id="childElem" type="button" class="btn-primary premium-btn" style="margin-top:8px;">Child Button</button>
+                            <span class="box-label">Parent</span>
+                            <button id="childElem" type="button" class="btn-primary premium-btn">Child Button</button>
                         </div>
                     </div>
 

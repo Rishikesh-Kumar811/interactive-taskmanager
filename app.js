@@ -28,19 +28,20 @@ const cancelEditBtn = document.getElementById('cancelEditBtn');
 const themeCheckbox = document.getElementById('themeCheckbox');
 
 const savedTheme = localStorage.getItem('theme2026') || 'dark';
-document.documentElement.setAttribute('data-theme', savedTheme);
+document.documentElement.dataset.theme = savedTheme;
+
 themeCheckbox.checked = savedTheme === 'dark';
 
 themeCheckbox.addEventListener('change', (e) => {
     const newTheme = e.target.checked ? 'dark' : 'light';
-    document.documentElement.setAttribute('data-theme', newTheme);
+    document.documentElement.dataset.theme = newTheme;
     localStorage.setItem('theme2026', newTheme);
 });
 
 const getIcon = (type) => {
     if (type === 'edit') return `<svg class="premium-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path class="draw-path" d="M12 20h9"></path><path class="draw-path" d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>`;
     if (type === 'delete') return `<svg class="premium-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline class="draw-path" points="3 6 5 6 21 6"></polyline><path class="draw-path" d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line class="draw-path" x1="10" y1="11" x2="10" y2="17"></line><line class="draw-path" x1="14" y1="11" x2="14" y2="17"></line></svg>`;
-    if (type === 'check') return `<svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline class="check-path" points="20 6 9 17 4 12"></polyline></svg>`;
+    if (type === 'check') return `<svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline class="check-path" points="20 6 9 17 4 12"></polyline></svg>`;
     return '';
 };
 
@@ -51,9 +52,6 @@ const createTaskElement = (task) => {
     card.dataset.status = task.completed ? 'completed' : 'pending';
     card.dataset.category = task.category;
     card.style.viewTransitionName = `card-${task.id}`;
-
-    const header = document.createElement('div');
-    header.className = 'task-card-header';
 
     const label = document.createElement('label');
     label.className = 'premium-checkbox-wrapper';
@@ -70,6 +68,21 @@ const createTaskElement = (task) => {
     
     label.append(checkbox, visual);
 
+    const contentWrapper = document.createElement('div');
+    contentWrapper.className = 'task-card-header';
+    
+    const textElem = document.createElement('p');
+    textElem.className = 'task-text';
+    textElem.appendChild(document.createTextNode(task.text));
+    
+    const catBadge = document.createElement('span');
+    catBadge.className = 'badge';
+    catBadge.style.fontSize = '0.7em';
+    catBadge.style.opacity = '0.6';
+    catBadge.appendChild(document.createTextNode(`[${task.category}]`));
+    
+    contentWrapper.append(textElem, catBadge);
+
     const actions = document.createElement('div');
     actions.className = 'task-actions';
     
@@ -84,23 +97,8 @@ const createTaskElement = (task) => {
     delBtn.innerHTML = getIcon('delete');
     
     actions.append(editBtn, delBtn);
-    header.append(label, actions);
 
-    const textElem = document.createElement('p');
-    textElem.className = 'task-text';
-    
-    const textNode = document.createTextNode(task.text);
-    textElem.appendChild(textNode);
-    
-    const catBadge = document.createElement('span');
-    catBadge.className = 'badge';
-    catBadge.style.fontSize = '0.7em';
-    catBadge.style.marginLeft = '8px';
-    catBadge.style.opacity = '0.6';
-    catBadge.appendChild(document.createTextNode(`[${task.category}]`));
-    textElem.appendChild(catBadge);
-
-    card.append(header, textElem);
+    card.append(label, contentWrapper, actions);
     return card;
 };
 
