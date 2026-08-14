@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" width="100%" height="100%">
+    <defs>
+        <linearGradient id="wave1" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#0f172a" stop-opacity="0.2"/>
+            <stop offset="50%" stop-color="#1e3a8a" stop-opacity="0.3"/>
+            <stop offset="100%" stop-color="#0f172a" stop-opacity="0.2"/>
+        </linearGradient>
+        <linearGradient id="wave2" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#1e3a8a" stop-opacity="0.3"/>
+            <stop offset="50%" stop-color="#3b82f6" stop-opacity="0.15"/>
+            <stop offset="100%" stop-color="#1e3a8a" stop-opacity="0.3"/>
+        </linearGradient>
+        <linearGradient id="wave3" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#020617" stop-opacity="0.9"/>
+            <stop offset="50%" stop-color="#0f172a" stop-opacity="0.8"/>
+            <stop offset="100%" stop-color="#020617" stop-opacity="0.9"/>
+        </linearGradient>
+        <filter id="oceanBlur" x="-10%" y="-10%" width="120%" height="120%">
+            <feGaussianBlur stdDeviation="4" result="blur" />
+            <feComposite in="SourceGraphic" in2="blur" operator="over" />
+        </filter>
+    </defs>
+
+    <rect width="1200" height="120" fill="transparent" />
+
+    <g filter="url(#oceanBlur)">
+        <path d="M0,60 C300,10 600,110 1200,60 C1800,10 2100,110 2400,60 L2400,120 L0,120 Z" fill="url(#wave1)">
+            <animateTransform attributeName="transform" type="translate" from="0 0" to="-1200 0" dur="20s" repeatCount="indefinite" />
+        </path>
+        
+        <path d="M-1200,80 C-800,120 -400,20 0,80 C400,120 800,20 1200,80 L1200,120 L-1200,120 Z" fill="url(#wave2)">
+            <animateTransform attributeName="transform" type="translate" from="0 0" to="1200 0" dur="15s" repeatCount="indefinite" />
+        </path>
+    </g>
+
+    <path d="M0,100 C300,60 600,120 1200,90 C1800,60 2100,120 2400,90 L2400,120 L0,120 Z" fill="url(#wave3)">
+        <animateTransform attributeName="transform" type="translate" from="0 0" to="-1200 0" dur="12s" repeatCount="indefinite" />
+    </path>
+</svg>

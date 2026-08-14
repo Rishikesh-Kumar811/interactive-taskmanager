@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="An interactive Task Manager functioning as a DOM Explorer.">
+    <title>Interactive Task Manager 2026</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="app-header premium-glass">
+        <h1>Task Manager 2026</h1>
+        <div class="theme-toggle">
+            <label class="theme-switch3d">
+                <input type="checkbox" id="themeCheckbox" class="sr-only" aria-label="Toggle Dark Mode">
+                <div class="switch3d-track premium-surface">
+                    <div class="switch3d-thumb">
+                        <svg class="sun3d-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <radialGradient id="sunGrad" cx="50%" cy="50%" r="50%" fx="30%" fy="30%">
+                                    <stop offset="0%" stop-color="#FFF200" />
+                                    <stop offset="50%" stop-color="#FF9900" />
+                                    <stop offset="100%" stop-color="#FF5500" />
+                                </radialGradient>
+                                <filter id="sunGlow" x="-20%" y="-20%" width="140%" height="140%">
+                                    <feGaussianBlur stdDeviation="6" result="blur" />
+                                    <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                                </filter>
+                            </defs>
+                            <g filter="url(#sunGlow)">
+                                <path d="M50 5 L50 15 M50 85 L50 95 M5 50 L15 50 M85 50 L95 50 M18 18 L25 25 M75 75 L82 82 M18 82 L25 75 M75 18 L82 25" stroke="url(#sunGrad)" stroke-width="6" stroke-linecap="round"/>
+                                <path d="M35 12 L40 20 M65 88 L60 80 M12 35 L20 40 M88 65 L80 60 M26 15 L32 24 M74 85 L68 76 M15 26 L24 32 M85 74 L76 68" stroke="url(#sunGrad)" stroke-width="4" stroke-linecap="round"/>
+                                <circle cx="50" cy="50" r="24" fill="url(#sunGrad)"/>
+                                <circle cx="42" cy="45" r="3" fill="#662200"/>
+                                <circle cx="58" cy="45" r="3" fill="#662200"/>
+                                <path d="M42 55 Q50 62 58 55" stroke="#662200" stroke-width="3" stroke-linecap="round" fill="none"/>
+                            </g>
+                        </svg>
+                        
+                        <svg class="moon3d-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <radialGradient id="moonGrad" cx="50%" cy="50%" r="50%" fx="30%" fy="30%">
+                                    <stop offset="0%" stop-color="#E0F2FE" />
+                                    <stop offset="70%" stop-color="#93C5FD" />
+                                    <stop offset="100%" stop-color="#3B82F6" />
+                                </radialGradient>
+                                <radialGradient id="craterGrad" cx="50%" cy="50%" r="50%">
+                                    <stop offset="0%" stop-color="#1E3A8A" stop-opacity="0.6"/>
+                                    <stop offset="100%" stop-color="#93C5FD" stop-opacity="0.1"/>
+                                </radialGradient>
+                                <filter id="moonGlow" x="-20%" y="-20%" width="140%" height="140%">
+                                    <feGaussianBlur stdDeviation="4" result="blur" />
+                                    <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                                </filter>
+                            </defs>
+                            <g filter="url(#moonGlow)">
+                                <circle cx="50" cy="50" r="32" fill="url(#moonGrad)"/>
+                                <circle cx="38" cy="35" r="5" fill="url(#craterGrad)" stroke="#60A5FA" stroke-width="1"/>
+                                <circle cx="62" cy="42" r="7" fill="url(#craterGrad)" stroke="#60A5FA" stroke-width="1.5"/>
+                                <circle cx="46" cy="62" r="4" fill="url(#craterGrad)" stroke="#60A5FA" stroke-width="1"/>
+                                <circle cx="68" cy="28" r="2.5" fill="url(#craterGrad)" stroke="#60A5FA" stroke-width="0.5"/>
+                            </g>
+                        </svg>
+                    </div>
+                </div>
+            </label>
+        </div>
+    </header>
+
+    <main class="app-main">
+        <section class="task-creation-section" aria-labelledby="creation-title">
+            <h2 id="creation-title" class="sr-only">Create New Task</h2>
+            <form id="taskForm" class="task-form">
+                <div class="form-group" style="flex:1;">
+                    <input type="text" id="taskInput" class="premium-input" placeholder="What needs to be done?" required autocomplete="off">
+                </div>
+                <div class="form-group category-select-group">
+                    <select id="taskCategory" class="premium-input" required aria-label="Task Category">
+                        <option value="" disabled selected>Category...</option>
+                        <option value="Work">Work</option>
+                        <option value="Personal">Personal</option>
+                        <option value="Study">Study</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-primary premium-btn">Add Task</button>
+            </form>
+        </section>
+
+        <section class="task-list-section" aria-labelledby="list-title">
+            <header class="list-header">
+                <div class="list-title-row">
+                    <h2 id="list-title">Your Tasks</h2>
+                    <div class="task-stats">
+                        <span id="completedCount">0</span> / <span id="totalCount">0</span> Completed
+                    </div>
+                </div>
+                <div class="list-actions-row">
+                    <input type="text" id="searchInput" class="premium-input search-input" placeholder="Search tasks..." aria-label="Search Tasks">
+                    <button type="button" id="clearAllBtn" class="btn-secondary premium-btn">Clear All</button>
+                </div>
+            </header>
+
+            <div id="taskListContainer" class="task-bento-grid">
+            </div>
+        </section>
+
+        <section class="pipeline-section premium-surface" aria-labelledby="pipeline-title">
+            <h2 id="pipeline-title">Browser Rendering Pipeline</h2>
+            <div class="pipeline-grid">
+                <div class="pipeline-step"><span class="step-icon">📄</span>HTML</div>
+                <div class="pipeline-arrow">↓</div>
+                <div class="pipeline-step"><span class="step-icon">🔍</span>Parsing</div>
+                <div class="pipeline-arrow">↓</div>
+                <div class="pipeline-step"><span class="step-icon">✂️</span>Tokenization</div>
+                <div class="pipeline-arrow">↓</div>
+                <div class="pipeline-step branch"><span class="step-icon">🌳</span>DOM Tree</div>
+                
+                <div class="pipeline-step css-start"><span class="step-icon">💅</span>CSS</div>
+                <div class="pipeline-arrow css-arrow">↓</div>
+                <div class="pipeline-step branch css-tree"><span class="step-icon">🌲</span>CSSOM Tree</div>
+                
+                <div class="pipeline-combo">DOM Tree + CSSOM Tree</div>
+                <div class="pipeline-arrow combo-arrow">↓</div>
+                <div class="pipeline-step final-step"><span class="step-icon">🖥️</span>Render Tree</div>
+            </div>
+        </section>
+
+        <event-playground>
+            <template shadowrootmode="open">
+                <link rel="stylesheet" href="style.css">
+                <section class="demo-playground premium-surface" aria-labelledby="demo-title">
+                    <h2 id="demo-title">Event Propagation Trace</h2>
+                    <p class="demo-desc">Click the Child Button to trigger Capturing & Bubbling.</p>
+                    
+                    <div id="grandparentElem" class="demo-box grandparent">
+                        Grandparent
+                        <div id="parentElem" class="demo-box parent">
+                            Parent
+                            <button id="childElem" type="button" class="btn-primary premium-btn" style="margin-top:8px;">Child Button</button>
+                        </div>
+                    </div>
+
+                    <div id="eventTraceLog" class="trace-log" aria-live="polite">
+                        <div class="log-empty">Waiting for events...</div>
+                    </div>
+                </section>
+            </template>
+        </event-playground>
+    </main>
+
+    <dialog id="editTaskModal" class="native-modal premium-surface">
+        <div class="modal-content">
+            <header class="modal-header">
+                <h2>Edit Task</h2>
+                <button type="button" class="btn-close premium-btn" aria-label="Close Modal" id="closeModalBtn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </header>
+            <form id="editTaskForm" class="task-form">
+                <input type="hidden" id="editTaskId">
+                <div class="form-group">
+                    <input type="text" id="editTaskInput" class="task-input premium-input" required minlength="3">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary premium-btn" id="cancelEditBtn">Cancel</button>
+                    <button type="submit" class="btn-primary premium-btn">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </dialog>
+
+    <script src="app.js" type="module"></script>
+</body>
+</html>
