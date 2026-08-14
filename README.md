@@ -8,7 +8,7 @@
 
 <br/>
 
-<a href="https://interactive-taskmanager.vercel.app/" target="_blank"><img src="https://img.shields.io/badge/LIVE_DEMO-INTERACTIVE_TASK_MANAGER-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Live Demo" /></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://github.com/Rishikesh-Kumar811/interactive-taskmanager" target="_blank"><img src="https://img.shields.io/badge/GITHUB-REPOSITORY-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub Repository" /></a>
+<a href="https://interactive-taskmanager.vercel.app/" target="_blank"><img src="https://img.shields.io/badge/LIVE_DEMO-INTERACTIVE_TASK_MANAGER-0070F3?style=for-the-badge&logo=vercel&logoColor=white" alt="Live Demo" /></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://github.com/Rishikesh-Kumar811/interactive-taskmanager" target="_blank"><img src="https://img.shields.io/badge/GITHUB-REPOSITORY-24292e?style=for-the-badge&logo=github&logoColor=white" alt="GitHub Repository" /></a>
 
 <br/><br/>
 
