@@ -1,65 +1,120 @@
 <div align="center">
-  
-![Interactive Task Manager 2026](banner.svg)
-  
-  <br>
-  
-  <p align="center">
-    <strong>A hyper-modern, zero-dependency DOM Explorer & Task Manager built for the bleeding-edge web.</strong>
-  </p>
 
-  <p align="center">
-    <a href="#-overview">Overview</a> •
-    <a href="#-premium-features">Features</a> •
-    <a href="#-tech-stack--2026-standards">Tech Stack</a> •
-    <a href="#-architecture--code-quality">Architecture</a>
-  </p>
+![Interactive Task Manager 2026](banner.svg)
+
+# 🌟 Interactive Task Manager 2026 & 🌐 Live Demo
+
+**A high-performance, interactive DOM Exploration & Task Management Suite built exclusively with pure Vanilla JavaScript (ES2026), Modern CSS (2026 Spec), and Semantic HTML5.**
+
+<br/>
+
+<a href="https://interactive-taskmanager.vercel.app/" target="_blank"><img src="https://img.shields.io/badge/LIVE_DEMO-INTERACTIVE_TASK_MANAGER-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Live Demo" /></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://github.com/Rishikesh-Kumar811/interactive-taskmanager" target="_blank"><img src="https://img.shields.io/badge/GITHUB-REPOSITORY-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub Repository" /></a>
+
+<br/><br/>
+
 </div>
 
 ---
 
-## <sub><img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Rocket.png" alt="Rocket" width="28" height="28" /></sub> Overview
+## 🛠️ Tech Stack
 
-The **Interactive Task Manager 2026** is not just a standard to-do list—it is an academic-grade masterclass in modern DOM manipulation. Built entirely without frameworks, it leverages the absolute latest web standards (up to August 2026) to deliver a buttery-smooth, premium user experience. 
+<br/>
 
-It features native physics-based spring animations, 3D interactive toggles, and a Declarative Shadow DOM playground for tracing event propagation.
+<p align="center">
+  <img src="https://skillicons.dev/icons?i=html,css,js,vercel,vscode,git,github" alt="Tech Stack" />
+</p>
 
----
+<br/>
 
-## <sub><img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Activities/Sparkles.png" alt="Sparkles" width="28" height="28" /></sub> Premium Features
+| Layer | Technologies & Modern Standards | Implementation in Codebase |
+| :--- | :--- | :--- |
+| **Structure** | **Semantic HTML5** • Native `<dialog>` • ARIA 1.3 | Clean landmark layout (`<header>`, `<main>`, `<section>`, `<article>`), native accessible modal dialog with backdrop rendering, and accessible form controls. |
+| **Styling** | **Modern CSS (2026 Spec)** • `@layer` • `oklch()` • `view()` | Cascade Layers (`base, layout, components, premium, utilities`), perceptual `oklch()` color space, dynamic `light-dark()` tokens, and GPU-accelerated Scroll-Driven Animations. |
+| **Logic** | **Pure Vanilla JS (ES2026)** • Native DOM • Event Delegation | Zero-dependency DOM manipulation (`createElement`, `replaceWith`, `replaceChildren`, `DocumentFragment`), centralized delegation, and W3C capturing/bubbling tracing. |
+| **Tooling & Deployment** | **Vercel** • **VS Code** • **Git** • **GitHub** | Instant production deployment on Vercel, zero npm build steps, zero transpilation overhead. |
 
-- <sub><img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Gem%20Stone.png" alt="Gem" width="20" height="20" /></sub> **Liquid 3D UI/UX:** Features a custom-built 3D Day/Night toggle switch utilizing complex SVG math, radial gradients, and shrinking glow effects.
-- <sub><img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Activities/Bullseye.png" alt="Bullseye" width="20" height="20" /></sub> **Physics-Based Spring Animations:** UI elements interact using `linear()` and `cubic-bezier()` spring physics for snappy, satisfying feedback.
-- <sub><img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Roller%20Coaster.png" alt="Roller Coaster" width="20" height="20" /></sub> **Native Scroll-Driven Animations:** Task cards smoothly fade in as they scroll into view using CSS `animation-timeline`, requiring absolute zero JavaScript.
-- <sub><img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Microscope.png" alt="Microscope" width="20" height="20" /></sub> **Event Trace Playground:** An isolated web component (Declarative Shadow DOM) allowing developers to visually trace the exact flow of Event Capturing and Bubbling across the DOM tree.
-- <sub><img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Gear.png" alt="Gear" width="20" height="20" /></sub> **Rendering Pipeline Visualizer:** A beautiful CSS grid topology illustrating the browser's internal engine flow from HTML Parsing to the Render Tree.
-- <sub><img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Control%20Knobs.png" alt="Terminal" width="20" height="20" /></sub> **Adaptive Terminal Log:** A minimalist, borderless terminal log component powered by the CSS `light-dark()` function and customized modern scrollbars that dynamically adapts perfectly to theme context.
-
----
-
-## <sub><img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Laptop.png" alt="Laptop" width="28" height="28" /></sub> Tech Stack & 2026 Standards
-
-This project abandons legacy approaches in favor of the strict 2026 web platform.
-
-| Technology | 2026 Standard Implementation |
-| :--- | :--- |
-| **HTML** | Uses `<template shadowrootmode="open">` (Declarative Shadow DOM) and native `<dialog>` overlays. |
-| **CSS** | Fully refactored with **Native CSS Nesting** (`&`), `light-dark()` color function for flawless theming, CSS View Transitions for state morphing, and `oklch()` color definitions. |
-| **JavaScript** | Utilizes **ES2026 Standards** including the **`Temporal API`** (`Temporal.Now.plainDateISO()`), **`Promise.withResolvers()`**, and modern structural event delegation. |
-| **DOM Engine** | 100% strict imperative DOM API usage (`createElement`, `createTextNode`, `appendChild`, `closest`, `remove`). |
+<br/>
 
 ---
 
-## <sub><img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Building%20Construction.png" alt="Construction" width="28" height="28" /></sub> Architecture & Code Quality
+## ✨ Key Features
 
-### <sub><img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Broom.png" alt="Broom" width="22" height="22" /></sub> Zero-Comment & Dead-Code Free Policy
-In accordance with strict clean-code directives, this codebase contains **zero comments** and **zero duplicated logic**. The architecture relies purely on self-documenting code, highly declarative variable naming, and strict modular separation. State duplication has been completely eliminated in favor of a single source of truth using `data-theme`.
+<br/>
 
-### <sub><img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Link.png" alt="Link" width="22" height="22" /></sub> Event Delegation
-Instead of attaching memory-heavy event listeners to individual buttons, a single listener is attached to the parent `.task-bento-grid`. It uses `e.target.closest()` to precisely intercept actions, drastically reducing memory consumption and preventing memory leaks on dynamic DOM nodes.
+### 1. ⚡ Dynamic Task Lifecycle & Native Modal Editing
+- **Instant Creation**: Real-time form submission with custom category selection (`Work`, `Personal`, `Study`).
+- **Native `<dialog>` Modal**: Non-destructive editing modal with background focus trapping and clean state synchronization.
+- **Atomic DOM Mutations**: Updates task cards in-place using `replaceWith()` and buffers batch list updates with `DocumentFragment`.
+- **View Transitions API**: Seamless smooth animations on task insertion, state changes, and deletion.
 
-### <sub><img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Floppy%20Disk.png" alt="Floppy Disk" width="22" height="22" /></sub> Local State Persistence
-State is imperatively driven but persistently mirrored to `localStorage`. The application intelligently bootstraps its initial state from the disk or provides a premium default layout if none exists.
+### 2. 🌊 120FPS GPU Scroll-Driven Entry Animations
+- **Anonymous View Timelines**: Powered by native CSS `animation-timeline: view()` and `animation-range: entry 0% cover 25%`.
+- **One-by-One Reveal**: Each task card enters independently with a physical slide-up (`translateY: 48px -> 0px`) and scale depth (`scale: 0.93 -> 1.0`).
+- **Zero Main-Thread Jank**: Runs directly on the browser's GPU compositor thread with `will-change: transform, opacity`.
+
+### 3. 🌓 Tactile 3D Theme Switcher (Light & Dark Modes)
+- **Physics-Based Sphere**: Custom interactive 3D Sun and Moon sphere toggle with smooth rotational physics.
+- **Zero Fog / 100% Solid Opacity**: Dynamic `light-dark()` token resolution delivering pure contrast, crisp text, and vibrant colors in both themes.
+- **State Persistence**: Automatic persistence of user theme preference in `localStorage`.
+
+### 4. 🔍 Real-Time Search & Category Filter Engine
+- **Instant Query Matching**: Real-time text search across all task titles with dynamic zero-result feedback.
+- **1-Click Filter Chips**: Filter instantly by `All`, `Work`, `Personal`, or `Study` categories.
+- **Dynamic Metrics Counter**: Live-updating task completion statistics (`X / Y Completed`) synced with active filters.
+
+### 5. 🔬 Live DOM & W3C Event Propagation Explorer
+- **Visual Propagation Playground**: Dedicated interactive testing surface tracing W3C event phases.
+- **Capturing & Bubbling Logs**: Real-time logging of down-tree Capturing (`useCapture: true`) and up-tree Bubbling (`useCapture: false`) phases with exact timestamp ordering.
+- **Browser Rendering Pipeline**: Comprehensive visual guide detailing all 6 stages from raw byte tokenization to GPU layer compositing.
+
+### 6. 📱 Universal Proportional Responsiveness
+- **Mathematical `clamp()` Architecture**: Fluid scaling for all fonts, paddings, gaps, and card dimensions.
+- **Locked Proportions**: Proportions remain locked on Ultra-Wide (4K/8K) monitors, standard 1080p laptops (Dell G15), tablets, and mobile devices down to 350px width.
+
+<br/>
+
+---
+
+## 💻 Installation & 🚀 Setup
+
+<br/>
+
+Get the project up and running locally in seconds:
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com/Rishikesh-Kumar811/interactive-taskmanager.git
+cd interactive-taskmanager
+```
+
+### 2. Run Locally (Choose Any Option)
+
+#### Option A: Using Node.js / npx (Recommended)
+```bash
+npx -y serve -p 8080 .
+```
+
+#### Option B: Using Python 3
+```bash
+python -m http.server 8080
+```
+
+#### Option C: Direct Browser Launch
+```bash
+# Windows
+start index.html
+
+# macOS
+open index.html
+
+# Linux
+xdg-open index.html
+```
+
+### 3. Access in Browser
+> Open your browser and navigate to: **`http://localhost:8080`**
+
+<br/>
 
 ---
 

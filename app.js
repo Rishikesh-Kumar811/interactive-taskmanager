@@ -1,11 +1,12 @@
 const getStoredTasks = () => {
     const stored = localStorage.getItem('tasks2026');
     return stored ? JSON.parse(stored) : [
-        { id: 't_1', text: 'Build Premium Interactions', category: 'Work', completed: true, createdAt: typeof Temporal !== 'undefined' ? Temporal.Now.zonedDateTimeISO('UTC').toString() : new Date().toISOString() }
+        { id: 't_1', text: 'Build Premium Interactions', category: 'Work', completed: true, createdAt: typeof Temporal !== 'undefined' ? Temporal.Now.plainDateISO().toString() : new Date().toISOString() }
     ];
 };
 
 let tasks = getStoredTasks();
+let activeCategory = 'all';
 
 const saveTasks = () => {
     localStorage.setItem('tasks2026', JSON.stringify(tasks));
@@ -19,22 +20,30 @@ const completedCountEl = document.getElementById('completedCount');
 const totalCountEl = document.getElementById('totalCount');
 const searchInput = document.getElementById('searchInput');
 const clearAllBtn = document.getElementById('clearAllBtn');
+const filterChipsContainer = document.getElementById('filterChipsContainer');
 const editModal = document.getElementById('editTaskModal');
 const editForm = document.getElementById('editTaskForm');
 const editInput = document.getElementById('editTaskInput');
 const editTaskId = document.getElementById('editTaskId');
+const editTaskCategory = document.getElementById('editTaskCategory');
 const closeModalBtn = document.getElementById('closeModalBtn');
 const cancelEditBtn = document.getElementById('cancelEditBtn');
 const themeCheckbox = document.getElementById('themeCheckbox');
 
 const savedTheme = localStorage.getItem('theme2026') || 'dark';
 document.documentElement.dataset.theme = savedTheme;
-
+document.documentElement.setAttribute('data-theme', savedTheme);
+document.documentElement.classList.add(`${savedTheme}-theme`);
 themeCheckbox.checked = savedTheme === 'dark';
 
 themeCheckbox.addEventListener('change', (e) => {
     const newTheme = e.target.checked ? 'dark' : 'light';
     document.documentElement.dataset.theme = newTheme;
+    document.documentElement.setAttribute('data-theme', newTheme);
+    if (document.documentElement.classList.contains('light-theme') || document.documentElement.classList.contains('dark-theme')) {
+        document.documentElement.classList.remove('light-theme', 'dark-theme');
+    }
+    document.documentElement.classList.add(`${newTheme}-theme`);
     localStorage.setItem('theme2026', newTheme);
 });
 
@@ -50,8 +59,7 @@ const createTaskElement = (task) => {
     card.className = 'task-card premium-surface';
     card.setAttribute('data-id', task.id);
     card.dataset.status = task.completed ? 'completed' : 'pending';
-    card.dataset.category = task.category;
-    card.style.viewTransitionName = `card-${task.id}`;
+    card.dataset.category = task.category || 'General';
 
     const label = document.createElement('label');
     label.className = 'premium-checkbox-wrapper';
@@ -74,14 +82,17 @@ const createTaskElement = (task) => {
     const textElem = document.createElement('p');
     textElem.className = 'task-text';
     textElem.appendChild(document.createTextNode(task.text));
-    
-    const catBadge = document.createElement('span');
-    catBadge.className = 'badge';
-    catBadge.style.fontSize = '0.7em';
-    catBadge.style.opacity = '0.6';
-    catBadge.appendChild(document.createTextNode(`[${task.category}]`));
-    
-    contentWrapper.append(textElem, catBadge);
+
+    const metaWrapper = document.createElement('div');
+    metaWrapper.className = 'task-card-meta';
+
+    const categoryBadge = document.createElement('span');
+    const catClass = (task.category || 'General').toLowerCase();
+    categoryBadge.className = `badge badge-${catClass}`;
+    categoryBadge.textContent = task.category || 'General';
+
+    metaWrapper.append(categoryBadge);
+    contentWrapper.append(textElem, metaWrapper);
 
     const actions = document.createElement('div');
     actions.className = 'task-actions';
@@ -96,67 +107,97 @@ const createTaskElement = (task) => {
     delBtn.setAttribute('aria-label', 'Delete Task');
     delBtn.innerHTML = getIcon('delete');
     
-    actions.append(editBtn, delBtn);
+    actions.append(delBtn);
+    actions.prepend(editBtn);
 
     card.append(label, contentWrapper, actions);
+
     return card;
 };
 
-const renderTasks = (filterQuery = '') => {
-    if (!document.startViewTransition) {
-        updateDOM(filterQuery);
-        return;
-    }
-    document.startViewTransition(() => {
-        updateDOM(filterQuery);
+const getFilteredTasks = () => {
+    const filterQuery = searchInput ? searchInput.value.toLowerCase().trim() : '';
+    return tasks.filter(t => {
+        const matchesQuery = t.text.toLowerCase().includes(filterQuery);
+        const matchesCategory = activeCategory === 'all' || (t.category && t.category.toLowerCase() === activeCategory.toLowerCase());
+        return matchesQuery && matchesCategory;
     });
 };
 
-const updateDOM = (filterQuery) => {
-    const fragment = document.createDocumentFragment();
+const updateStats = () => {
+    const filteredTasks = getFilteredTasks();
     let completed = 0;
-    
-    // Iterator helper usage for advanced metrics
-    const lazyCompletedCount = typeof Iterator !== 'undefined' ? Iterator.from(tasks).filter(t => t.completed).toArray().length : tasks.filter(t => t.completed).length;
-    
-    const filteredTasks = tasks.filter(t => t.text.toLowerCase().includes(filterQuery.toLowerCase()));
-    
-    // Object.groupBy native integration for masonry categories
-    const groupedByCategory = Object.groupBy(filteredTasks, t => t.category);
-    
-    for (const category in groupedByCategory) {
-        const catTasks = groupedByCategory[category];
-        const groupEl = document.createElement('div');
-        groupEl.className = 'category-group';
-        
-        const titleEl = document.createElement('h3');
-        titleEl.className = 'category-title';
-        titleEl.textContent = category;
-        
-        const gridEl = document.createElement('div');
-        gridEl.className = 'category-grid';
-        
-        catTasks.forEach(task => {
-            if (task.completed) completed++;
-            gridEl.appendChild(createTaskElement(task));
-        });
-        
-        groupEl.append(titleEl, gridEl);
-        fragment.appendChild(groupEl);
-    }
-    
-    taskListContainer.innerHTML = '';
-    taskListContainer.appendChild(fragment);
-    
+    filteredTasks.forEach(task => { if (task.completed) completed++; });
     completedCountEl.textContent = completed;
     totalCountEl.textContent = filteredTasks.length;
-    
     saveTasks();
 };
 
+const renderTasks = () => {
+    const filteredTasks = getFilteredTasks();
+    const fragment = document.createDocumentFragment();
+    
+    if (filteredTasks.length === 0) {
+        const emptyState = document.createElement('div');
+        emptyState.className = 'empty-state';
+        
+        const icon = document.createElement('div');
+        icon.className = 'empty-state-icon';
+        icon.textContent = '✨';
+        
+        const title = document.createElement('h3');
+        title.className = 'empty-state-title';
+        title.textContent = tasks.length === 0 ? 'No tasks yet' : 'No matching tasks found';
+        
+        const desc = document.createElement('p');
+        desc.className = 'empty-state-desc';
+        desc.textContent = tasks.length === 0 ? 'Add a new task above to get started!' : 'Try adjusting your search or category filter.';
+        
+        emptyState.append(icon, title, desc);
+        fragment.appendChild(emptyState);
+    } else {
+        filteredTasks.forEach(task => {
+            fragment.appendChild(createTaskElement(task));
+        });
+    }
+    
+    const applyUpdate = () => {
+        taskListContainer.replaceChildren(fragment);
+        updateStats();
+    };
+
+    if (document.startViewTransition) {
+        try {
+            const transition = document.startViewTransition(applyUpdate);
+            if (transition && transition.finished) {
+                transition.finished.catch(() => {});
+            }
+        } catch {
+            applyUpdate();
+        }
+    } else {
+        applyUpdate();
+    }
+};
+
 if (searchInput) {
-    searchInput.addEventListener('input', (e) => {
-        renderTasks(e.target.value);
+    searchInput.addEventListener('input', () => renderTasks());
+}
+
+if (filterChipsContainer) {
+    filterChipsContainer.addEventListener('click', (e) => {
+        const chip = e.target.closest('.filter-chip');
+        if (!chip) return;
+        
+        filterChipsContainer.querySelectorAll('.filter-chip').forEach(c => {
+            c.classList.remove('active');
+            c.setAttribute('aria-selected', 'false');
+        });
+        
+        chip.classList.add('active');
+        chip.setAttribute('aria-selected', 'true');
+        activeCategory = chip.dataset.category || 'all';
+        renderTasks();
     });
 }
 
@@ -164,8 +205,7 @@ if (clearAllBtn) {
     clearAllBtn.addEventListener('click', () => {
         if(confirm("Clear all tasks?")) {
             tasks = [];
-            Array.from(taskListContainer.children).forEach(child => child.remove());
-            renderTasks(searchInput ? searchInput.value : '');
+            renderTasks();
         }
     });
 }
@@ -177,6 +217,9 @@ taskForm.addEventListener('submit', (e) => {
         return;
     }
     
+    console.log("Property (live value):", taskInput.value);
+    console.log("Attribute (static value):", taskInput.getAttribute("value"));
+    
     const text = taskInput.value.trim();
     if (text) {
         const newTask = {
@@ -184,11 +227,11 @@ taskForm.addEventListener('submit', (e) => {
             text,
             category: taskCategory ? taskCategory.value : 'General',
             completed: false,
-            createdAt: typeof Temporal !== 'undefined' ? Temporal.Now.zonedDateTimeISO('UTC').toString() : new Date().toISOString()
+            createdAt: typeof Temporal !== 'undefined' ? Temporal.Now.plainDateISO().toString() : new Date().toISOString()
         };
         tasks.unshift(newTask);
-        taskInput.value = '';
-        renderTasks(searchInput ? searchInput.value : '');
+        taskForm.reset();
+        renderTasks();
     }
 });
 
@@ -203,39 +246,76 @@ taskListContainer.addEventListener('click', (e) => {
         const task = tasks.find(t => t.id === id);
         if (task) {
             task.completed = !task.completed;
-            renderTasks(searchInput ? searchInput.value : '');
+            const checkbox = card.querySelector('.task-checkbox');
+            if (checkbox) checkbox.checked = task.completed;
+            card.dataset.status = task.completed ? 'completed' : 'pending';
+            if (task.completed) {
+                card.setAttribute('data-completed', 'true');
+            } else if (card.hasAttribute('data-completed')) {
+                card.removeAttribute('data-completed');
+            }
+            updateStats();
         }
     } else if (e.target.closest('.action-delete')) {
         tasks = tasks.filter(t => t.id !== id);
-        renderTasks(searchInput ? searchInput.value : '');
+        const applyUpdate = () => {
+            card.remove();
+            updateStats();
+            if (tasks.length === 0) renderTasks();
+        };
+        if (document.startViewTransition) {
+            try {
+                const transition = document.startViewTransition(applyUpdate);
+                if (transition && transition.finished) {
+                    transition.finished.catch(() => {});
+                }
+            } catch {
+                applyUpdate();
+            }
+        } else {
+            applyUpdate();
+        }
     } else if (e.target.closest('.action-edit')) {
         const task = tasks.find(t => t.id === id);
-        if (task) {
-            openEditModal(task);
-        }
+        if (task) openEditModal(task);
     }
 });
+
+const restoreInert = () => {
+    document.querySelector('.app-main').inert = false;
+    document.querySelector('.app-header').inert = false;
+};
 
 const openEditModal = (task) => {
     editTaskId.value = task.id;
     editTaskInput.value = task.text;
+    if (editTaskCategory && task.category) {
+        editTaskCategory.value = task.category;
+    }
     editModal.showModal();
     document.querySelector('.app-main').inert = true;
     document.querySelector('.app-header').inert = true;
 };
 
 const closeEditModal = () => {
-    const { promise, resolve } = Promise.withResolvers ? Promise.withResolvers() : { promise: Promise.resolve(), resolve: () => {} };
-    editModal.classList.add('closing');
-    setTimeout(() => {
-        editModal.close();
-        editModal.classList.remove('closing');
-        document.querySelector('.app-main').inert = false;
-        document.querySelector('.app-header').inert = false;
-        resolve();
-    }, 300);
-    return promise;
+    return new Promise((resolve) => {
+        editModal.classList.add('closing');
+        setTimeout(() => {
+            editModal.close();
+            editModal.classList.remove('closing');
+            restoreInert();
+            resolve();
+        }, 300);
+    });
 };
+
+editModal.addEventListener('cancel', () => {
+    restoreInert();
+});
+
+editModal.addEventListener('close', () => {
+    restoreInert();
+});
 
 closeModalBtn.addEventListener('click', closeEditModal);
 cancelEditBtn.addEventListener('click', closeEditModal);
@@ -249,53 +329,108 @@ editForm.addEventListener('submit', (e) => {
     
     const text = editInput.value.trim();
     const id = editTaskId.value;
+    const category = editTaskCategory ? editTaskCategory.value : 'General';
     
     if (text) {
         const task = tasks.find(t => t.id === id);
         if (task) {
             task.text = text;
-            renderTasks(searchInput ? searchInput.value : '');
+            task.category = category;
+            const oldCard = document.querySelector(`.task-card[data-id="${id}"]`);
+            if (oldCard) {
+                const newCard = createTaskElement(task);
+                const placeholder = document.createElement('span');
+                placeholder.hidden = true;
+                oldCard.before(placeholder);
+                placeholder.after(newCard);
+                oldCard.replaceWith(newCard);
+                placeholder.remove();
+            }
+            updateStats();
         }
         closeEditModal();
     }
 });
 
-const playgroundHost = document.querySelector('event-playground');
-if (playgroundHost && playgroundHost.shadowRoot) {
-    const sr = playgroundHost.shadowRoot;
-    const eventTraceLog = sr.getElementById('eventTraceLog');
+const eventTraceLog = document.getElementById('eventTraceLog');
+
+const logTrace = (phase, elementDesc) => {
+    if (!eventTraceLog) return;
+    const entry = document.createElement('div');
+    entry.className = `log-entry phase-${phase}`;
+    entry.appendChild(document.createTextNode(`[${phase.toUpperCase()}] Event on ${elementDesc}`));
     
-    const logTrace = (phase, elementDesc) => {
-        if (!eventTraceLog) return;
-        const entry = document.createElement('div');
-        entry.className = `log-entry phase-${phase}`;
-        entry.appendChild(document.createTextNode(`[${phase.toUpperCase()}] Event on ${elementDesc}`));
-        
-        if (eventTraceLog.querySelector('.log-empty')) {
-            eventTraceLog.innerHTML = '';
-        }
-        
-        eventTraceLog.appendChild(entry);
-        eventTraceLog.scrollTop = eventTraceLog.scrollHeight;
-        
-        while (eventTraceLog.children.length > 15) {
-            eventTraceLog.firstChild.remove();
+    if (eventTraceLog.querySelector('.log-empty')) {
+        eventTraceLog.innerHTML = '';
+    }
+    
+    eventTraceLog.append(entry);
+    eventTraceLog.scrollTop = eventTraceLog.scrollHeight;
+    
+    while (eventTraceLog.children.length > 15) {
+        eventTraceLog.firstChild.remove();
+    }
+};
+
+const grandparent = document.getElementById('grandparentElem');
+const parent = document.getElementById('parentElem');
+const child = document.getElementById('childElem');
+
+if (grandparent && parent && child) {
+    grandparent.addEventListener('click', () => { logTrace('capture', 'Grandparent'); console.log('Grandparent'); }, true);
+    parent.addEventListener('click', () => { logTrace('capture', 'Parent'); console.log('Parent'); }, true);
+    child.addEventListener('click', () => { logTrace('capture', 'Child'); console.log('Child'); }, true);
+
+    child.addEventListener('click', () => { logTrace('bubble', 'Child'); console.log('Child'); });
+    parent.addEventListener('click', () => { logTrace('bubble', 'Parent'); console.log('Parent'); });
+    grandparent.addEventListener('click', () => { logTrace('bubble', 'Grandparent'); console.log('Grandparent'); });
+}
+
+const initScrollDampener = () => {
+    const el = document.querySelector('.app-main');
+    if (!el) return;
+
+    let targetY = el.scrollTop;
+    let currentY = el.scrollTop;
+    let isRunning = false;
+
+    const tick = () => {
+        currentY += (targetY - currentY) * 0.14;
+        el.scrollTop = Math.round(currentY);
+
+        if (Math.abs(targetY - currentY) > 0.5) {
+            requestAnimationFrame(tick);
+        } else {
+            el.scrollTop = targetY;
+            currentY = targetY;
+            isRunning = false;
         }
     };
 
-    const grandparent = sr.getElementById('grandparentElem');
-    const parent = sr.getElementById('parentElem');
-    const child = sr.getElementById('childElem');
+    window.addEventListener('wheel', (e) => {
+        if (editModal && editModal.open) return;
+        if (e.target && e.target.closest && e.target.closest('.trace-log')) return;
 
-    if (grandparent && parent && child) {
-        grandparent.addEventListener('click', () => logTrace('capture', 'Grandparent'), true);
-        parent.addEventListener('click', () => logTrace('capture', 'Parent'), true);
-        child.addEventListener('click', () => logTrace('capture', 'Child Button'), true);
+        e.preventDefault();
 
-        grandparent.addEventListener('click', () => logTrace('bubble', 'Grandparent'));
-        parent.addEventListener('click', () => logTrace('bubble', 'Parent'));
-        child.addEventListener('click', () => logTrace('bubble', 'Child Button'));
-    }
-}
+        if (!isRunning) {
+            currentY = el.scrollTop;
+            targetY = el.scrollTop;
+        }
 
+        let delta = e.deltaY;
+        if (e.deltaMode === 1) delta *= 36;
+
+        const clampedDelta = Math.sign(delta) * Math.min(Math.abs(delta), 100) * 0.65;
+        const maxScroll = el.scrollHeight - el.clientHeight;
+        targetY = Math.max(0, Math.min(maxScroll, targetY + clampedDelta));
+
+        if (!isRunning) {
+            isRunning = true;
+            requestAnimationFrame(tick);
+        }
+    }, { passive: false });
+};
+
+initScrollDampener();
 renderTasks();
