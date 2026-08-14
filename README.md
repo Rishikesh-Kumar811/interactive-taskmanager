@@ -18,7 +18,7 @@
 
 ---
 
-## <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Rocket.png" alt="Rocket" width="28" height="28" align="absmiddle" /> Overview
+## <sub><img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Rocket.png" alt="Rocket" width="28" height="28" /></sub> Overview
 
 The **Interactive Task Manager 2026** is not just a standard to-do list—it is an academic-grade masterclass in modern DOM manipulation. Built entirely without frameworks, it leverages the absolute latest web standards (up to August 2026) to deliver a buttery-smooth, premium user experience. 
 
@@ -26,7 +26,7 @@ It features native physics-based spring animations, 3D interactive toggles, and 
 
 ---
 
-## <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Activities/Sparkles.png" alt="Sparkles" width="28" height="28" align="absmiddle" /> Premium Features
+## <sub><img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Activities/Sparkles.png" alt="Sparkles" width="28" height="28" /></sub> Premium Features
 
 - <sub><img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Gem%20Stone.png" alt="Gem" width="20" height="20" /></sub> **Liquid 3D UI/UX:** Features a custom-built 3D Day/Night toggle switch utilizing complex SVG math, radial gradients, and shrinking glow effects.
 - <sub><img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Activities/Bullseye.png" alt="Bullseye" width="20" height="20" /></sub> **Physics-Based Spring Animations:** UI elements interact using `linear()` and `cubic-bezier()` spring physics for snappy, satisfying feedback.
@@ -36,7 +36,7 @@ It features native physics-based spring animations, 3D interactive toggles, and 
 
 ---
 
-## <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Laptop.png" alt="Laptop" width="28" height="28" align="absmiddle" /> Tech Stack & 2026 Standards
+## <sub><img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Laptop.png" alt="Laptop" width="28" height="28" /></sub> Tech Stack & 2026 Standards
 
 This project abandons legacy approaches in favor of the strict 2026 web platform.
 
@@ -49,15 +49,15 @@ This project abandons legacy approaches in favor of the strict 2026 web platform
 
 ---
 
-## <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Building%20Construction.png" alt="Construction" width="28" height="28" align="absmiddle" /> Architecture & Code Quality
+## <sub><img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Building%20Construction.png" alt="Construction" width="28" height="28" /></sub> Architecture & Code Quality
 
-### <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Broom.png" alt="Broom" width="22" height="22" align="absmiddle" /> Zero-Comment Policy
+### <sub><img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Broom.png" alt="Broom" width="22" height="22" /></sub> Zero-Comment Policy
 In accordance with strict clean-code directives, this codebase contains **zero comments**. The architecture relies on self-documenting code, highly declarative variable naming, and strict modular separation.
 
-### <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Link.png" alt="Link" width="22" height="22" align="absmiddle" /> Event Delegation
+### <sub><img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Link.png" alt="Link" width="22" height="22" /></sub> Event Delegation
 Instead of attaching memory-heavy event listeners to individual buttons, a single listener is attached to the parent `.task-bento-grid`. It uses `e.target.closest()` to precisely intercept actions, drastically reducing memory consumption and preventing memory leaks on dynamic DOM nodes.
 
-### <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Floppy%20Disk.png" alt="Floppy Disk" width="22" height="22" align="absmiddle" /> Local State Persistence
+### <sub><img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Floppy%20Disk.png" alt="Floppy Disk" width="22" height="22" /></sub> Local State Persistence
 State is imperatively driven but persistently mirrored to `localStorage`. The application intelligently bootstraps its initial state from the disk or provides a premium default layout if none exists.
 
 ---
