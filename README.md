@@ -18,7 +18,7 @@
 
 ---
 
-## 🚀 Overview
+## <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Rocket.png" alt="Rocket" width="28" height="28" /> Overview
 
 The **Interactive Task Manager 2026** is not just a standard to-do list—it is an academic-grade masterclass in modern DOM manipulation. Built entirely without frameworks, it leverages the absolute latest web standards (up to August 2026) to deliver a buttery-smooth, premium user experience. 
 
@@ -26,17 +26,17 @@ It features native physics-based spring animations, 3D interactive toggles, and 
 
 ---
 
-## ✨ Premium Features
+## <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Activities/Sparkles.png" alt="Sparkles" width="28" height="28" /> Premium Features
 
-- 🔮 **Liquid 3D UI/UX:** Features a custom-built 3D Day/Night toggle switch utilizing complex SVG math, radial gradients, and shrinking glow effects.
-- 🎯 **Physics-Based Spring Animations:** UI elements interact using `linear()` and `cubic-bezier()` spring physics for snappy, satisfying feedback.
-- 🎢 **Native Scroll-Driven Animations:** Task cards smoothly fade in as they scroll into view using CSS `animation-timeline`, requiring absolute zero JavaScript.
-- 🔬 **Event Trace Playground:** An isolated web component (Declarative Shadow DOM) allowing developers to visually trace the exact flow of Event Capturing and Bubbling across the DOM tree.
-- ⚙️ **Rendering Pipeline Visualizer:** A beautiful CSS grid topology illustrating the browser's internal engine flow from HTML Parsing to the Render Tree.
+- <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Crystal%20Ball.png" alt="Crystal" width="20" height="20" /> **Liquid 3D UI/UX:** Features a custom-built 3D Day/Night toggle switch utilizing complex SVG math, radial gradients, and shrinking glow effects.
+- <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Activities/Direct%20Hit.png" alt="Target" width="20" height="20" /> **Physics-Based Spring Animations:** UI elements interact using `linear()` and `cubic-bezier()` spring physics for snappy, satisfying feedback.
+- <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Roller%20Coaster.png" alt="Roller Coaster" width="20" height="20" /> **Native Scroll-Driven Animations:** Task cards smoothly fade in as they scroll into view using CSS `animation-timeline`, requiring absolute zero JavaScript.
+- <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Microscope.png" alt="Microscope" width="20" height="20" /> **Event Trace Playground:** An isolated web component (Declarative Shadow DOM) allowing developers to visually trace the exact flow of Event Capturing and Bubbling across the DOM tree.
+- <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Gear.png" alt="Gear" width="20" height="20" /> **Rendering Pipeline Visualizer:** A beautiful CSS grid topology illustrating the browser's internal engine flow from HTML Parsing to the Render Tree.
 
 ---
 
-## 💻 Tech Stack & 2026 Standards
+## <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Laptop.png" alt="Laptop" width="28" height="28" /> Tech Stack & 2026 Standards
 
 This project abandons legacy approaches in favor of the strict 2026 web platform.
 
@@ -49,15 +49,15 @@ This project abandons legacy approaches in favor of the strict 2026 web platform
 
 ---
 
-## 🏗️ Architecture & Code Quality
+## <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Building%20Construction.png" alt="Construction" width="28" height="28" /> Architecture & Code Quality
 
-### 🧹 Zero-Comment Policy
+### <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Broom.png" alt="Broom" width="22" height="22" /> Zero-Comment Policy
 In accordance with strict clean-code directives, this codebase contains **zero comments**. The architecture relies on self-documenting code, highly declarative variable naming, and strict modular separation.
 
-### 🔗 Event Delegation
+### <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Link.png" alt="Link" width="22" height="22" /> Event Delegation
 Instead of attaching memory-heavy event listeners to individual buttons, a single listener is attached to the parent `.task-bento-grid`. It uses `e.target.closest()` to precisely intercept actions, drastically reducing memory consumption and preventing memory leaks on dynamic DOM nodes.
 
-### 💾 Local State Persistence
+### <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Floppy%20Disk.png" alt="Floppy Disk" width="22" height="22" /> Local State Persistence
 State is imperatively driven but persistently mirrored to `localStorage`. The application intelligently bootstraps its initial state from the disk or provides a premium default layout if none exists.
 
 ---
