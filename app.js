@@ -1,7 +1,7 @@
 const getStoredTasks = () => {
     const stored = localStorage.getItem('tasks2026');
     return stored ? JSON.parse(stored) : [
-        { id: 't_1', text: 'Build Premium Interactions', category: 'Work', completed: true, createdAt: typeof Temporal !== 'undefined' ? Temporal.Now.plainDateISO().toString() : new Date().toISOString() }
+        { id: 't_1', text: 'Build Premium Interactions', category: 'Work', completed: true, createdAt: typeof Temporal !== 'undefined' ? Temporal.Now.zonedDateTimeISO('UTC').toString() : new Date().toISOString() }
     ];
 };
 
@@ -116,15 +116,34 @@ const updateDOM = (filterQuery) => {
     const fragment = document.createDocumentFragment();
     let completed = 0;
     
+    // Iterator helper usage for advanced metrics
+    const lazyCompletedCount = typeof Iterator !== 'undefined' ? Iterator.from(tasks).filter(t => t.completed).toArray().length : tasks.filter(t => t.completed).length;
+    
     const filteredTasks = tasks.filter(t => t.text.toLowerCase().includes(filterQuery.toLowerCase()));
     
-    const groupedByCategory = Object.groupBy ? Object.groupBy(filteredTasks, t => t.category) : {};
+    // Object.groupBy native integration for masonry categories
+    const groupedByCategory = Object.groupBy(filteredTasks, t => t.category);
     
-    filteredTasks.forEach(task => {
-        if (task.completed) completed++;
-        const card = createTaskElement(task);
-        fragment.appendChild(card);
-    });
+    for (const category in groupedByCategory) {
+        const catTasks = groupedByCategory[category];
+        const groupEl = document.createElement('div');
+        groupEl.className = 'category-group';
+        
+        const titleEl = document.createElement('h3');
+        titleEl.className = 'category-title';
+        titleEl.textContent = category;
+        
+        const gridEl = document.createElement('div');
+        gridEl.className = 'category-grid';
+        
+        catTasks.forEach(task => {
+            if (task.completed) completed++;
+            gridEl.appendChild(createTaskElement(task));
+        });
+        
+        groupEl.append(titleEl, gridEl);
+        fragment.appendChild(groupEl);
+    }
     
     taskListContainer.innerHTML = '';
     taskListContainer.appendChild(fragment);
@@ -165,7 +184,7 @@ taskForm.addEventListener('submit', (e) => {
             text,
             category: taskCategory ? taskCategory.value : 'General',
             completed: false,
-            createdAt: typeof Temporal !== 'undefined' ? Temporal.Now.plainDateISO().toString() : new Date().toISOString()
+            createdAt: typeof Temporal !== 'undefined' ? Temporal.Now.zonedDateTimeISO('UTC').toString() : new Date().toISOString()
         };
         tasks.unshift(newTask);
         taskInput.value = '';

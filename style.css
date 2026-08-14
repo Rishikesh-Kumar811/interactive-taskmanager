@@ -9,15 +9,15 @@
         --brand-lightness: 0.5;
         
         --color-brand: oklch(50% 0.25 265);
-        --color-brand-hover: color-mix(in oklch, var(--color-brand) 85%, white);
-        --color-danger: oklch(0.6 0.2 25);
+        --color-brand-hover: oklch(from var(--color-brand) calc(l + 0.1) c h);
+        --color-danger: oklch(60% 0.2 25);
         
         --bg-color: light-dark(oklch(98% 0 0), oklch(10% 0 0));
         --surface-color: light-dark(oklch(100% 0 0), oklch(14% 0 0));
-        --surface-border: light-dark(oklch(92% 0 0), oklch(22% 0 0));
-        --surface-border-hover: light-dark(oklch(85% 0 0), oklch(30% 0 0));
+        --surface-border: light-dark(oklch(from var(--surface-color) calc(l - 0.08) c h), oklch(from var(--surface-color) calc(l + 0.08) c h));
+        --surface-border-hover: light-dark(oklch(from var(--surface-border) calc(l - 0.07) c h), oklch(from var(--surface-border) calc(l + 0.08) c h));
         --text-color: light-dark(oklch(20% 0 0), oklch(95% 0 0));
-        --text-muted: light-dark(oklch(50% 0 0), oklch(70% 0 0));
+        --text-muted: oklch(from var(--text-color) l c h / 0.6);
         
         --font-base: clamp(1rem, 0.9vw + 0.5rem, 1.125rem);
         --font-lg: clamp(1.25rem, 1.5vw + 0.5rem, 2rem);
@@ -113,12 +113,37 @@
     }
 
     .task-bento-grid {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: var(--space-md);
-        align-items: start;
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-lg);
         container-type: inline-size;
         container-name: taskgrid;
+    }
+
+    .category-group {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-sm);
+    }
+    
+    .category-title {
+        font-size: var(--font-lg);
+        font-weight: 700;
+        margin-bottom: var(--space-xs);
+        color: var(--color-brand);
+    }
+    
+    .category-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: var(--space-md);
+        align-items: start;
+    }
+
+    @supports (display: grid-lanes) {
+        .category-grid {
+            display: grid-lanes;
+        }
     }
 }
 
@@ -127,6 +152,16 @@
         background: light-dark(rgba(255, 255, 255, 0.7), rgba(0, 0, 0, 0.7));
         backdrop-filter: blur(12px) saturate(180%);
         -webkit-backdrop-filter: blur(12px) saturate(180%);
+    }
+
+    @property --angle {
+        syntax: '<angle>';
+        initial-value: 0deg;
+        inherits: false;
+    }
+
+    @keyframes rotateBorder {
+        to { --angle: 360deg; }
     }
 
     .premium-surface {
@@ -138,17 +173,35 @@
             none
         );
         transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s var(--spring-bounce);
+        position: relative;
+    }
+    
+    .task-card.premium-surface::before {
+        content: '';
+        position: absolute;
+        inset: -1px;
+        border-radius: calc(var(--radius) + 1px);
+        background: conic-gradient(from var(--angle), transparent 70%, var(--color-brand) 100%);
+        z-index: -1;
+        animation: rotateBorder 4s linear infinite;
+        opacity: 0;
+        transition: opacity 0.4s;
+        transform: translate(calc(cos(var(--angle)) * 2px), calc(sin(var(--angle)) * 2px));
     }
     
     @media (prefers-color-scheme: dark) {
         .task-card.premium-surface:hover {
-            border-color: var(--surface-border-hover);
+            border-color: transparent;
             box-shadow: 0 0 20px -5px rgba(255, 255, 255, 0.05);
         }
     }
     [data-theme="dark"] .task-card.premium-surface:hover {
-        border-color: var(--surface-border-hover);
+        border-color: transparent;
         box-shadow: 0 0 20px -5px rgba(255, 255, 255, 0.05);
+    }
+    
+    .task-card.premium-surface:hover::before {
+        opacity: 1;
     }
 
     .premium-btn {
@@ -208,9 +261,7 @@
     }
     
     select.premium-input {
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        appearance: none;
+        appearance: base-select;
         background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' width='16' height='16' fill='none' stroke='%23888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
         background-repeat: no-repeat;
         background-position: right 12px center;
@@ -223,10 +274,15 @@
 
 
     .theme-switch3d {
+        --track-w: clamp(56px, 12vw, 72px);
+        --track-h: clamp(28px, 6vw, 36px);
+        --thumb-sz: calc(var(--track-h) - 6px);
+        --thumb-move: calc(var(--track-w) - var(--thumb-sz) - 6px);
+        
         display: inline-block;
         cursor: pointer;
-        width: 72px;
-        height: 36px;
+        width: var(--track-w);
+        height: var(--track-h);
         position: relative;
         -webkit-tap-highlight-color: transparent;
     }
@@ -246,8 +302,8 @@
         position: absolute;
         top: 3px;
         left: 3px;
-        width: 28px;
-        height: 28px;
+        width: var(--thumb-sz);
+        height: var(--thumb-sz);
         border-radius: 50%;
         background: light-dark(#ffffff, #0F172A);
         box-shadow: 
@@ -308,7 +364,7 @@
     }
 
     [data-theme="dark"] .switch3d-track .switch3d-thumb {
-        transform: translateX(36px);
+        transform: translateX(var(--thumb-move));
     }
     [data-theme="dark"] .switch3d-track .switch3d-thumb::before {
         transform: translate(-50%, -50%) scale(0);
@@ -409,6 +465,35 @@
     
     .premium-icon .draw-path {
         transition: stroke-dashoffset 0.4s var(--spring-snappy);
+    }
+
+    #clearAllBtn {
+        anchor-name: --clear-btn;
+    }
+
+    .tooltip {
+        position: fixed;
+        position-anchor: --clear-btn;
+        inset-block-end: anchor(top);
+        inset-inline-start: anchor(center);
+        translate: -50% -8px;
+        background: var(--text-color);
+        color: var(--bg-color);
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: var(--font-sm);
+        opacity: 0;
+        transition: opacity 0.2s, transform 0.2s var(--spring-bounce);
+        pointer-events: none;
+        z-index: 100;
+        transform: translateY(10px);
+        font-weight: 600;
+        white-space: nowrap;
+    }
+
+    #clearAllBtn:hover + .tooltip {
+        opacity: 1;
+        transform: translateY(0);
     }
 
     .native-modal {
